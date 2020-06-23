@@ -1,0 +1,78 @@
+#!/bin/sh
+#
+### BEGIN INIT INFO
+# chkconfig: 345 40 90
+# Default-Start:  3 4 5
+# Default-Stop: 0 1 6
+# Require-Start: $network $local_fs $remote_fs
+# Short-Description: Kdump failover setup
+# Description: Sets up kdump such that it will use a kdump-post script
+#              to collect a vmcore to a local target in case of primary 
+#              failure.
+### END INIT INFO
+#
+# Author: Vratislav Bendel <vbendel@redhat.com>
+
+# Get function from functions library
+. /etc/init.d/functions
+
+# Start service command:
+start() {
+	/usr/bin/kdump-failover-config-generator.sh
+}
+
+# Stop service - leave empty as this has nothing to do...
+stop() {
+	echo "Service kdump-failover got stopped... though nothing happened."
+}
+
+# Check current conf (status command)
+status() {
+	# Get $kdump_post_script from /etc/kdump-failover.conf
+	# grep relevant fields in 
+	#	- kdump-failover.conf
+	#	- kdump.conf
+	#	- kdump-post script
+
+	echo "####################"
+	echo "KDUMP.CONF:"
+	grep -v ^# /etc/kdump.conf
+
+	echo " "
+	echo "####################"
+	echo "KDUMP-FAILOVER.CONF:"
+	grep -v ^# /etc/kdump-failover.conf
+	
+	kdump_post_script=$(grep ^kdump_post_script= /etc/kdump-failover.conf | cut -d '=' -f 2)
+	echo " "
+	echo "####################"
+	echo "KDUMP=POST.SH variables:"
+	grep -e ^lvm= \
+             -e ^vglv= \
+             -e ^localdev= \
+             -e ^backup_type= \
+             -e ^dumppath= \
+             $kdump_post_script
+}
+
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status
+        ;;
+  restart|reload|condrestart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+
+exit $?

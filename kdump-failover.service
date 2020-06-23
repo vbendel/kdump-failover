@@ -1,0 +1,14 @@
+[Unit]
+Description=Kdump failover setup
+After=network.target network-online.target remote-fs.target basic.target
+Before=kdump.service
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/kdump-failover-config-generator.sh
+ExecReload=/usr/bin/kdump-failover-config-generator.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
