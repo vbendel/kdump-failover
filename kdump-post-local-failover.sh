@@ -63,8 +63,7 @@ echo_log ()
 
 echo_log "Kdump post script initiated at ${date}..."
 
-## IMPORTANT!!! uncomment this if -- this was a testing version
-#if [ $1 -ne 0 ]; then
+if [ $1 -ne 0 ]; then
         echo_log "Collection to primary target failed. Falling back to local dump-disk."
 
 	# LVMs may need to get actived for device mapper to create the block device files
@@ -72,7 +71,7 @@ echo_log "Kdump post script initiated at ${date}..."
 		
 		# Set DM_DISABLE_UDEV to avoid deadlock
 		export DM_DISABLE_UDEV=1 
-		lvm lvchange -a y -vv $vglv 
+		lvm lvchange -a y -vv $vglv  # OPT: reduce verbosity 
 		
 		# Get the correct block device filename
 		#minor=$(lvm lvdisplay $vglv | grep Block | cut -d ':' -f 2)
@@ -107,11 +106,11 @@ echo_log "Kdump post script initiated at ${date}..."
 
 	echo_log "Fallback collection success."
 
-#else
+else
 
-#    echo_log "Primary collection successfull, nothing to do..."
+    echo_log "Primary collection successfull, nothing to do..."
 
-#fi
+fi
 
 # FIXME: The first-kernel rootfs should be mounted on /sysroot,
 # but in case it isn't maybe we should put this into some 'if'
