@@ -1,0 +1,3 @@
+These .rpms were built with the included specfiles and on rhel6 and rhel7 machines respectively (notice the {?dist} macro).
+
+I guess there are not OS-specific dependencies for this kind of .rpm, but still wanted to build it natively.

@@ -36,7 +36,7 @@ It is specifically meant to cover the use-case, when primary target is some stor
 
 All files are rather primitive scripts; easy to read imho. So feel free to examine them and suggest improvements. (I'm not the best bash scripter ;))
 
-The current version 0.2 was tested (and should work) with the specific use-case that it was disegned for: primary NFS target and local LVM backup device. Tough I haven't done any thorough testing, so who knows what corner cases and bugs await.
+The current version 0.2 was tested (and should work) with the specific use-case that it was disegned for: primary NFS target and local LVM backup device. Though I haven't done any thorough testing, so who knows what corner cases and bugs await.
 
 Future plans are mainly to:
 * Improve the scripts in terms of bash scripting.
