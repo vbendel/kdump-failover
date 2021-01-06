@@ -1,5 +1,5 @@
 Name: 		kdump-failover
-Version:	0.2
+Version:	0.3
 Release:	1%{?dist}
 Summary:	Service exteding kdump's functionality to be able to specify a backup target in case of primary failure
 URL:		https://github.com/vbendel/kdump-failover
@@ -10,19 +10,19 @@ Kdump-failover is a simple bunch of scripts that are made to extend kdump's func
 
 %prep
 rm -rf $RPM_BUILD_DIR/*
-tar xf $RPM_SOURCE_DIR/kdump-failover-0.2.tar.gz
+tar xf $RPM_SOURCE_DIR/kdump-failover.tar.gz
 
 
 %install
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/
-install -m 644 $RPM_BUILD_DIR/kdump-failover-0.2/kdump-failover.conf $RPM_BUILD_ROOT/etc/kdump-failover.conf
+install -m 644 $RPM_BUILD_DIR/kdump-failover/kdump-failover.conf $RPM_BUILD_ROOT/etc/kdump-failover.conf
 install -d -m 755 $RPM_BUILD_ROOT/var/crash/scripts
-install -m 755 $RPM_BUILD_DIR/kdump-failover-0.2/kdump-post-local-failover.sh $RPM_BUILD_ROOT/var/crash/scripts/kdump-post-local-failover.sh
+install -m 755 $RPM_BUILD_DIR/kdump-failover/kdump-post-local-failover.sh $RPM_BUILD_ROOT/var/crash/scripts/kdump-post-local-failover.sh
 install -d -m 755 $RPM_BUILD_ROOT/usr/bin
-install -m 755 $RPM_BUILD_DIR/kdump-failover-0.2/kdump-failover-config-generator.sh $RPM_BUILD_ROOT/usr/bin/kdump-failover-config-generator.sh
+install -m 755 $RPM_BUILD_DIR/kdump-failover/kdump-failover-config-generator.sh $RPM_BUILD_ROOT/usr/bin/kdump-failover-config-generator.sh
 install -d -m 755 $RPM_BUILD_ROOT/etc/init.d/
-install -m 755 $RPM_BUILD_DIR/kdump-failover-0.2/kdump-failover.init $RPM_BUILD_ROOT/etc/init.d/kdump-failover
+install -m 755 $RPM_BUILD_DIR/kdump-failover/kdump-failover.init $RPM_BUILD_ROOT/etc/init.d/kdump-failover
 
 %post
 chkconfig --add kdump-failover
