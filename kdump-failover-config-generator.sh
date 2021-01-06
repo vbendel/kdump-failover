@@ -168,6 +168,7 @@ fi
 if [ $backup_is_lvm ]; then
 	echo "extra_bins $(which lvm)"	>> $workdir/kdump.conf.tmp
 fi
+echo "default reboot"	>> $workdir/kdump.conf.tmp
 
 ## RFE: add --verbose for debug prints
 
